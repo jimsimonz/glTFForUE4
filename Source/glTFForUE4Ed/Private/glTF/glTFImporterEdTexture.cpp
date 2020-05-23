@@ -144,11 +144,11 @@ UTexture* FglTFImporterEdTexture::CreateTexture(const TWeakPtr<FglTFImporterOpti
         }
         NewTexture->SRGB = !InIsNormalmap;
         NewTexture->CompressionSettings = !InIsNormalmap ? TC_Default : TC_Normalmap;
-        const TArray<uint8>* RawData = nullptr;
+        TArray<uint8> RawData;
         if (ImageWrapper->GetRaw(ImageFormat, BitDepth, RawData))
         {
             uint8* MipData = NewTexture->Source.LockMip(0);
-            FMemory::Memcpy(MipData, RawData->GetData(), RawData->Num());
+            FMemory::Memcpy(MipData, RawData.GetData(), RawData.Num());
             NewTexture->Source.UnlockMip(0);
         }
         break;
